@@ -18,4 +18,6 @@ const Filter = (props) => {
     </select>
     </div>
   )
-}
+};
+
+export default Filter; 
