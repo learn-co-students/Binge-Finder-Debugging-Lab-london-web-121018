@@ -14,22 +14,39 @@ class App extends Component {
     selectedShow: "",
     episodes: [],
     filterByRating: "",
+    page: 1,
   }
 
-  componentDidMount = () => {
-    Adapter.getShows().then(shows => this.setState({shows}))
+  componentDidMount(){
+    Adapter.getShows().then(shows => this.setState({shows}));
+
+    const addShowsToPage = () => {
+      ++this.state.page
+  
+      Adapter.getShows(this.state.page).then(shows => this.setState({shows: [...this.state.shows, ...shows]}));
+  
+    };
+    window.addEventListener('scroll', function() {
+      if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+        // debugger
+        addShowsToPage()
+        console.log("you're at the bottom of the page")};
+      
+   });
   }
 
-  componentDidUpdate = () => {
-    window.scrollTo(0, 0)
+  
+
+  componentDidUpdate() {
+    // window.scrollTo(0, 0)
   }
 
-  handleSearch (e){
+  handleSearch = (e) => {
     this.setState({ searchTerm: e.target.value.toLowerCase() })
   }
 
   handleFilter = (e) => {
-    e.target.value === "No Filter" ? this.setState({ filterRating:"" }) : this.setState({ filterRating: e.target.value})
+    e.target.value === "No Filter" ? this.setState({ filterByRating:"" }) : this.setState({ filterByRating: e.target.value})
   }
 
   selectShow = (show) => {
@@ -43,14 +60,15 @@ class App extends Component {
   displayShows = () => {
     if (this.state.filterByRating){
       return this.state.shows.filter((s)=> {
+        // debugger
         return s.rating.average >= this.state.filterByRating
       })
-    } else {
+    } 
       return this.state.shows
-    }
   }
 
   render (){
+    console.log("Pre-Render: ", this.displayShows())
     return (
       <div>
         <Nav handleFilter={this.handleFilter} handleSearch={this.handleSearch} searchTerm={this.state.searchTerm}/>
