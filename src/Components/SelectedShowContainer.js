@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Episode from './Components/Episode';
+import Episode from './Episode';
 
 class SelectedShowContainer extends Component {
 
@@ -18,8 +18,8 @@ class SelectedShowContainer extends Component {
   }
 
   mapEpisodes = () => {
-    return this.props.episodes.map((e)=>{
-      if (e.season == this.state.selectedSeason){
+    return this.props.episodes.map((e)=> {
+      if (e.season === this.state.selectedSeason){
         return (<Episode eachEpisode={e} key={e.id}/>)
       }
     })
@@ -51,9 +51,8 @@ class SelectedShowContainer extends Component {
 
 }
 
-export SelectedShowContainer;
-
-
+// without the comment below, I have a warning
+/*eslint no-extend-native: ["error", { "exceptions": ["Array"] }]*/
 Array.prototype.unique = function() {
   var arr = [];
   for(var i = 0; i < this.length; i++) {
@@ -63,3 +62,5 @@ Array.prototype.unique = function() {
   }
   return arr;
 }
+
+export default SelectedShowContainer;
