@@ -8,12 +8,13 @@ import { Grid } from 'semantic-ui-react';
 
 
 class App extends Component {
+
   state = {
     shows: [],
     searchTerm: "",
     selectedShow: "",
     episodes: [],
-    filterByRating: "",
+    filterRating: "",
   }
 
   componentDidMount = () => {
@@ -24,7 +25,7 @@ class App extends Component {
     window.scrollTo(0, 0)
   }
 
-  handleSearch (e){
+  handleSearch = (e) => {
     this.setState({ searchTerm: e.target.value.toLowerCase() })
   }
 
@@ -41,9 +42,9 @@ class App extends Component {
   }
 
   displayShows = () => {
-    if (this.state.filterByRating){
+    if (this.state.filterRating){
       return this.state.shows.filter((s)=> {
-        return s.rating.average >= this.state.filterByRating
+        return s.rating.average >= this.state.filterRating
       })
     } else {
       return this.state.shows
@@ -53,7 +54,7 @@ class App extends Component {
   render (){
     return (
       <div>
-        <Nav handleFilter={this.handleFilter} handleSearch={this.handleSearch} searchTerm={this.state.searchTerm}/>
+        <Nav handleFilter={this.handleFilter} filterRating={this.state.filterRating} handleSearch={this.handleSearch} searchTerm={this.state.searchTerm}/>
         <Grid celled>
           <Grid.Column width={5}>
             {!!this.state.selectedShow ? <SelectedShowContainer selectedShow={this.state.selectedShow} allEpisodes={this.state.episodes}/> : <div/>}
